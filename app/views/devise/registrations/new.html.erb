@@ -1,0 +1,57 @@
+    <div class="col-lg-7">
+      <div class="card card-register mx-auto mt-5">
+        <div class="card-header">Register an Account</div>
+        <div class="card-body">
+
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+              <%= bootstrap_devise_error_messages! %>
+              <div class="form-group">
+                <div class="input-group input-group-alternative">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                  </div>
+                  <%= f.text_field :name, placeholder: "Name", autofocus: true, autocomplete: false, class: 'form-control' %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-group input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                      </div>
+                  <%= f.email_field :email, placeholder: "Email", autofocus: true, autocomplete: false, class: 'form-control' %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-6">
+                    <div class="input-group input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                      </div>
+                      <%= f.password_field :password, placeholder: "Password", autocomplete: false, class: 'form-control' %>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="input-group input-group-alternative">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                      </div>
+                      <%= f.password_field :password_confirmation, placeholder: "Confirm Password", autocomplete: false, class: 'form-control' %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p><br /></p>
+              <div class="form-group">
+                <%= f.submit 'Register', class: 'btn btn-primary btn-block' %>
+              </div>
+            <% end %>
+          <%= render 'devise/shared/links' %>
+          <p class="small mt-3">By signing up, you are indicating that you have read and agree to the <a href="#" class="ps-hero__content__link">Terms of Use</a> and <a href="#">Privacy Policy</a>.
+            </p>
+        </div>
+      </div>
+    </div>

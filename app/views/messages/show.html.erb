@@ -1,0 +1,33 @@
+<% content_for :page_title do %>
+  Support
+<% end %>
+
+<div class="row mb-2">
+  <div class="col-md-12">
+
+    <p class="h6"><%=@message.subject%></p>
+    <p class="lead"><%=@message.body%></p>
+    <hr class="my-4">
+
+    <%= form_with(model: @reply, local: true) do |form| %>
+      <%= form.hidden_field :message_id %>
+      <%= form.hidden_field :subject %>
+      <div class="form-group">
+        <%= form.text_area :body, class: "form-control" %>
+      </div>
+      <div class="form-group" style="margin-left: 20px;">
+        <input type="checkbox" class="form-check-input" id="close_tkt" name="close_tkt">
+        <label class="form-check-label" for="close_tkt">Close This Ticket</label>
+      </div>
+      <button type="submit" class="btn btn-outline-primary">Reply</button>
+    <% end %>
+    
+
+    <% @message.replies.each do |m| %>
+    <hr class="my-4">
+    <p class="lead"><%= m.body %></p>
+    <small>~ <%=m.user.name ? m.user.name : m.user.email%>, <%=time_ago_in_words(m.created_at)%></small>
+    <% end %>
+
+  </div>
+</div>

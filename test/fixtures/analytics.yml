@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  project: one
+  uniq_request: 1
+  total_request: 1
+  total_bytes: 1
+  last_image_id: 1
+
+two:
+  user: two
+  project: two
+  uniq_request: 1
+  total_request: 1
+  total_bytes: 1
+  last_image_id: 1

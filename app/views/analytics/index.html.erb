@@ -1,0 +1,85 @@
+<% content_for :page_title do %>
+  Dashboard
+<% end %>
+
+<script type="text/javascript">
+var days_in_month = [<%=@uniqUsageData.keys.collect{|a|"\"#{a}\""}.join(",").html_safe%>];
+var uniq_count_in_month = <%=@uniqUsageData.values.to_s%>;
+var total_count_in_month = <%=@totalUsageData.values.to_s%>;
+var max_limit = <%=@max_limit%>;
+var min_limit = <%=@min_limit%>;
+</script>
+
+<% unless true %>
+<div class="row">
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-globe text-warning"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category">Usage</p>
+              <p class="card-title">150GB
+                </p><p>
+            </p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-money-coins text-success"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category">Billing</p>
+              <p class="card-title">$ 1,345
+                </p><p>
+            </p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<div class="card mb-3">
+  <div class="card-header">
+    <i class="fas fa-chart-area"></i>
+    Last 30 days Usage</div>
+  <div class="card-body">
+    <canvas id="usageChart" width="100%" height="30"></canvas>
+  </div>
+  <div class="card-footer small text-muted">Updated at <%=Time.now.to_s%></div>
+</div>
+
+<p class="lead">
+  Recent images
+</p>
+
+<div class="card-deck" style="margin-bottom:2rem;">
+ <% @images.each do |img| %>
+  <div class="card">
+    <div style="height:10rem;display: flex;align-items: center;flex-wrap: wrap;overflow:hidden;">
+      <img src="<%=img.result_url%>" class="card-img-top" alt="...">
+    </div>
+    <div class="card-footer">
+      <hr>
+      <small class="text-muted"><%=time_ago_in_words(img.updated_at) rescue "--"%></small>
+    </div>
+  </div>
+  <% end %>
+</div>

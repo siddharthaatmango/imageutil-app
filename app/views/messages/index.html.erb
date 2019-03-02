@@ -1,0 +1,27 @@
+<% content_for :page_title do %>
+  Support
+<% end %>
+
+<div class="row mb-2">
+  <div class="col-md-12">
+
+    <% @messages.each do |message| %>
+    <% m = message.last_message%>
+    <div class="card <%=message.status_class(current_user.is_support?)%> mb-3">
+      <div class="card-header">[<%=message.status_name(current_user.is_support?)%>] <%=message.subject%></div>
+      <div class="card-body">
+        <p class="lead">
+          <%= m.body %>
+        </p>
+        <small>~ <%=m.user.name ? m.user.name : m.user.email%>, <%=time_ago_in_words(m.created_at)%></small>
+      </div>
+      <div class="card-footer"><%= link_to 'Show', message, class: "btn btn-outline-default btn-sm" %></div>
+    </div>
+    <% end %>
+
+  </div>
+</div>
+
+<p class="lead">
+  <%= link_to 'New Support Request', new_message_path, class: "btn btn-success" %>
+</p>
