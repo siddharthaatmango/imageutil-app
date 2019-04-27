@@ -3,3 +3,22 @@ p.urlstr {
     font-size: 80%;
     color: gray;
 }
+
+.projectImgContainer{
+    height: 100px;
+    overflow: hidden;
+    text-align: center;
+    background: gray;
+}
+
+.projectImgContainer .card-img-top{
+    width: auto;
+}
+
+.projectHelp{
+    background: white;
+    border: 1px solid #dee2e6;
+    border-top: 0px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}

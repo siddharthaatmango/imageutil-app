@@ -1,0 +1,21 @@
+<div class="col-sm-4">
+    <div class="card">
+    <div class="projectImgContainer">
+    <% if project.current_image %>
+        <img class="card-img-top" src="<%=project.current_image.result_url%>" alt="Recent Image">
+    <% end %>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title"><%=project.name%></h5>
+        <p class="card-text">
+            <small><%=project.created_at.to_formatted_s(:short) %></small>
+            <p class="mb-1"><%=project.fqdn %></p>
+            <small>ID: <%=project.uuid%></small>
+        </p>
+    </div>
+    <div class="card-body">
+        <a href="/projects/<%=project.id%>/edit" class="btn btn-outline-primary">Open</a>
+        <%# <a href="#" class="btn btn-outline-default">Archive</a> %>
+    </div>
+    </div>
+</div>

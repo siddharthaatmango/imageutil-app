@@ -1,9 +1,9 @@
 <!-- Page Content -->
 <% if project.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+      <strong><%= pluralize(project.errors.count, "error") %> prohibited this origin from being saved:</strong>
 
-      <ul>
+      <ul style="padding-inline-start: 30px;color: red;">
       <% project.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
@@ -22,7 +22,7 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :fqdn, "Base Url"  %>
+    <%= f.label :fqdn %>
     <div class="input-group mb-2 mr-sm-2">
       <div class="input-group-prepend input-group-append">
         <%= f.select :protocol, ['http', 'https'], { class: 'form-control' }, disabled: current_user.is_support? %>
@@ -37,66 +37,3 @@
     <%= f.submit 'Save', class: 'btn btn-outline-primary' unless current_user.is_support?%>
   </div>
 <% end %>
-
-
-  <div class="jumbotron">
-    <h6 class="h6">Old Image Url:</h6>
-    <p class="urlstr"><%=project.protocol%>://<%=project.new_record? ? "images.yourdomain.com" : project.fqdn %>/path/to/image.jpg</p>
-    <hr class="my-4">
-    <h6 class="h6">New Image Url:</h6>
-    <p class="urlstr"><%=project.protocol%>://<%=project.default_host_domain%>/<%=project.uuid%>/s:610x150/path/to/image.jpg</p>
-    <p class="urlstr"><%=project.protocol%>://<%=project.default_host_domain%>/<%=project.uuid%>/s:610x150/smart/path/to/image.jpg</p>
-    <p class="urlstr"><%=project.protocol%>://<%=project.default_host_domain%>/<%=project.uuid%>/s:610x150,q:80/smart/path/to/image.jpg</p>
-    <p class="urlstr"><%=project.protocol%>://<%=project.default_host_domain%>/<%=project.uuid%>/s:610x150,q:80,f:png/smart/path/to/image.jpg</p>
-    <hr class="my-4">
-    <h6 class="h6">Smart Crop:</h6>
-    <p class="urlstr" style="margin-bottom:5px;">You can add optional "/smart" after the options to crop using face detection.</p>
-    <hr class="my-4">
-    <h6 class="h6">Options:</h6>
-    <p class="lead" style="margin-bottom:5px;">Scale(s)</p>
-    <p class="urlstr">
-      <strong>s:{width}x{height}</strong>
-      <br />
-      <span class="font-italic">
-        specify the bounding box of the final image, this is a mandatory option <br />
-        ~ aspect ratio will be always maintained <br />
-	      ~ you can use '0' in height or width values, in that case imageutil will resize based on the non-zero value, and resize the zero value automatically based on the original image's aspect ratio.
-      </span>
-    </p>
-    <br />
-    <p class="lead" style="margin-bottom:5px;">Policy(p)</p>
-    <p class="urlstr">
-      <strong>p:{crop|fit}-{top|middle|bottom}-{left|center|right}</strong>
-      <br />
-      <span class="font-italic">
-        specify the policy of resizing the final image
-      </span>
-    </p>
-    <br />
-    <p class="lead" style="margin-bottom:5px;">Quality(q)</p>
-    <p class="urlstr">
-      <strong>q:{0-100}</strong>
-      <br />
-      <span class="font-italic">
-        quality of final image
-      </span>
-    </p>
-    <br />
-    <p class="lead" style="margin-bottom:5px;">Format(f)</p>
-    <p class="urlstr">
-      <strong>f:{webp|jpeg|gif|png}</strong>
-      <br />
-      <span class="font-italic">
-        format of the final image
-      </span>
-    </p>
-    <br />
-    <p class="lead" style="margin-bottom:5px;">Effects(e)</p>
-    <p class="urlstr">
-      <strong>e:{brightness|contrast|rgb|round_corner|noise|watermark}(value)</strong>
-      <br />
-      <span class="font-italic">
-        add effects to the final image
-      </span>
-    </p>
-  </div>

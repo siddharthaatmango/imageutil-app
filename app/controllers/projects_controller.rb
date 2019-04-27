@@ -1,12 +1,11 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_project, only: [:edit, :update]
-  before_action :get_projects
+  before_action :set_project, only: [:show, :edit, :update]
+  before_action :get_projects, only: [:index]
 
   # GET /projects
   # GET /projects.json
   def index
-    @project = @projects.first
   end
 
   # GET /projects/new
@@ -15,21 +14,15 @@ class ProjectsController < ApplicationController
     @project.name = ""
     @project.uuid = SecureRandom.hex(10)
     @project.created_at = Time.now
-    @projects.push(@project)
+  end
 
-    respond_to do |format|
-      format.html
-      format.js
-    end
+  # GET /projects/1
+  def show
+    render :edit
   end
 
   # GET /projects/1/edit
   def edit
-
-    respond_to do |format|
-      format.html
-      format.js
-    end
   end
 
   # POST /projects
@@ -40,10 +33,10 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to projects_url, notice: 'Project was successfully created.' }
-        format.json { render :show, status: :created, location: @project }
+        format.html { render :edit, notice: 'Project was successfully created.' }
+        format.json { render :edit, status: :created, location: @project }
       else
-        format.html { redirect_to projects_url, error: @project.errors.first}
+        format.html { render :new }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
@@ -54,10 +47,10 @@ class ProjectsController < ApplicationController
   def update
     respond_to do |format|
       if @project.update(project_params)
-        format.html { redirect_to projects_url, notice: 'Project was successfully updated.' }
-        format.json { render :show, status: :ok, location: @project }
+        format.html { render :edit, notice: 'Project was successfully updated.' }
+        format.json { render :edit, status: :ok, location: @project }
       else
-        format.html { redirect_to projects_url, error: @project.errors.first }
+        format.html { render :edit }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end

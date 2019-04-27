@@ -96,7 +96,7 @@
             <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
               <div class="input-group">
                 <% if controller_name=="projects" && !current_user.is_support? %>
-                <a class="btn btn-outline-success" href="/projects/new.js" data-remote="true">
+                <a class="btn btn-outline-success" href="/projects/new">
                   <i class="fa fa-plus"></i> Add Origin
                 </a>
                 <% end %>
@@ -152,7 +152,7 @@
             <nav class="footer-nav">
               <ul>
                 <li class="nav-item">
-                  <a href="#" class="nav-link" target="https://imageutil.io/doc/">Documentation</a>
+                  <a href="https://imageutil.io/doc/#documentation" class="nav-link" target="_blank">Documentation</a>
                 </li>
               </ul>
             </nav>

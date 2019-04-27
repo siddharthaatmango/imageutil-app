@@ -2,12 +2,11 @@
   Origins
 <% end %>
 
-
-<div class="row mb-2" id="mainProjectsDiv">
-  <% if !@project %>
+<div class="row mb-2">
+  <% if @projects.blank? %>
   <div class="col-md-12">
     <div class="card">
-      <h5 class="card-header" id="projectDetailName">No image origin added</h5>
+      <h5 class="card-header">No image origin added</h5>
       <div class="card-body">
         An origin is any web server or storage which you are using for delivery or storing images.<br />
         ImageUtil will pull images from that origins via http or https and apply the transformations/filters that you want to apply.
@@ -17,27 +16,10 @@
     </div>
   </div>
   <% else %>
-  <div class="col-md-4">
-    <div class="list-group" id="projectList">
-      <% @projects.each do |project| %>
-      <a href="javascript:void(0)" data-id="<%=project.id%>" class="list-group-item list-group-item-action <%='active' if @project.id==project.id%>">
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-2"><%=project.new_record? ? "New" : project.name%></h5>
-          <small><%=project.created_at.to_formatted_s(:short) %></small>
-        </div>
-        <p class="mb-1"><%=project.new_record? ? "images.yourdomain.com" : project.fqdn %></p>
-        <small>ID: <%=project.uuid%></small>
-      </a>
-      <% end %>
-    </div>
-  </div>
-  <div class="col-md-8">
-    <div class="card">
-    <% if @project %>
-      <h5 class="card-header" id="projectDetailName"><%=@project.new_record? ? "New" : @project.name%></h5>
-      <div class="card-body" id="projectDetail">
-        <%= render 'form', project: @project %>
-      </div>
+  <div class="col-md-12">
+    <div class="row">
+    <% @projects.each do |project| %>
+        <%=render partial: "project_thumb", locals: {project: project} %>
     <% end %>
     </div>
   </div>
