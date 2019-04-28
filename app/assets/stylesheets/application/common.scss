@@ -1,3 +1,7 @@
+.jstree-default a ins.jstree-icon {
+    display: none;
+}
+
 p.urlstr {
     margin: 0px;
     font-size: 80%;
@@ -21,4 +25,45 @@ p.urlstr {
     border-top: 0px;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
+    display: none;
+}
+
+.projectFiles{
+    background: white;
+    border: 1px solid #dee2e6;
+    border-top: 0px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    display: block;
+}
+
+#uploadModal .modal-title{
+    font-size: unset;
+    line-height: unset;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+#uploadModal .modal-dialog{
+    max-width: 50%;
+}
+
+/* layout.css Style */
+.upload-drop-zone {
+    height: 200px;
+    border-width: 2px;
+    margin-bottom: 20px;
+}
+
+/* skin.css Style*/
+.upload-drop-zone {
+    color: #ccc;
+    border-style: dashed;
+    border-color: #ccc;
+    line-height: 200px;
+    text-align: center
+}
+.upload-drop-zone.drop {
+    color: #222;
+    border-color: #222;
 }

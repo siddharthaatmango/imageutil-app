@@ -10,6 +10,7 @@ class Project < ApplicationRecord
     message: "is already created" }
   validates :fqdn, uniqueness: { case_sensitive: false }
 
+  has_many :images
   has_one :current_image, -> { order created_at: :desc }, class_name: 'Image', foreign_key: :project_id
 
 

@@ -18,6 +18,7 @@ module Imageutil
 
     config.generators do |g|
       g.assets false
+      g.test_framework nil
     end
   end
 end

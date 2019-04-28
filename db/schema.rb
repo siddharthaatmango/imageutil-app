@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_23_183841) do
+ActiveRecord::Schema.define(version: 2019_04_27_111623) do
 
-  create_table "administrators", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "administrators", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2019_02_23_183841) do
     t.index ["reset_password_token"], name: "index_administrators_on_reset_password_token", unique: true
   end
 
-  create_table "analytics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "analytics", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "project_id"
     t.integer "uniq_request", default: 0
@@ -43,7 +43,23 @@ ActiveRecord::Schema.define(version: 2019_02_23_183841) do
     t.index ["user_id"], name: "index_analytics_on_user_id"
   end
 
-  create_table "images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "folders", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "project_id"
+    t.bigint "folder_id"
+    t.boolean "is_file"
+    t.string "name"
+    t.string "path"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["folder_id"], name: "index_folders_on_folder_id"
+    t.index ["path"], name: "index_folders_on_path", unique: true
+    t.index ["project_id"], name: "index_folders_on_project_id"
+    t.index ["user_id", "project_id", "path"], name: "index_uniq_key", unique: true
+    t.index ["user_id"], name: "index_folders_on_user_id"
+  end
+
+  create_table "images", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "project_id"
     t.string "key"
@@ -62,7 +78,7 @@ ActiveRecord::Schema.define(version: 2019_02_23_183841) do
     t.index ["user_id"], name: "index_images_on_user_id"
   end
 
-  create_table "invoices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "invoices", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.bigint "user_id"
     t.string "status"
     t.string "subject"
@@ -73,7 +89,7 @@ ActiveRecord::Schema.define(version: 2019_02_23_183841) do
     t.index ["user_id"], name: "index_invoices_on_user_id"
   end
 
-  create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "message_id"
     t.bigint "project_id"
@@ -92,7 +108,7 @@ ActiveRecord::Schema.define(version: 2019_02_23_183841) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
-  create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.bigint "user_id"
     t.string "name"
     t.string "uuid"
@@ -108,7 +124,7 @@ ActiveRecord::Schema.define(version: 2019_02_23_183841) do
     t.index ["uuid"], name: "index_projects_on_uuid", unique: true
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -136,6 +152,9 @@ ActiveRecord::Schema.define(version: 2019_02_23_183841) do
 
   add_foreign_key "analytics", "projects"
   add_foreign_key "analytics", "users"
+  add_foreign_key "folders", "folders"
+  add_foreign_key "folders", "projects"
+  add_foreign_key "folders", "users"
   add_foreign_key "images", "projects"
   add_foreign_key "images", "users"
   add_foreign_key "invoices", "users"

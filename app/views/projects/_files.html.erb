@@ -1,0 +1,58 @@
+<div class="jumbotron projectFiles">
+  <div id="jstree_div"></div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="uploadModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Upload Files</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+
+          <!-- Standar Form -->
+          <h4>Select files from your computer</h4>
+          <form action="" method="post" enctype="multipart/form-data" id="js-upload-form">
+            <div class="form-inline">
+              <div class="form-group" style="padding: 40px;width: 100%;border: 2px dashed #ccc;color: #ccc;text-align: center;">
+                <input type="file" name="files[]" id="js-upload-files" multiple>
+                <div style="margin:auto">Select files to upload</div>
+              </div>
+            </div>
+          </form>
+
+          <!-- Drop Zone -->
+          <h4>Or drag and drop files below</h4>
+          <div class="upload-drop-zone" id="drop-zone">
+            Just drag and drop files here
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;" id="upload-progress-bar">
+              <span class="sr-only">0% Complete</span>
+            </div>
+          </div>
+
+          <!-- Upload Finished -->
+          <div class="js-upload-finished" style="margin-top: 10px;">
+            <div class="list-group" id="upload-progress-items">
+              
+            </div>
+          </div>
+        </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+      </div>
+
+    </div>
+  </div>
+</div>

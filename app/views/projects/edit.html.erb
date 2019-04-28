@@ -9,12 +9,13 @@
     <div class="col-md-8">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" href="#">Quick Help</a>
+                <a class="nav-link active" href="#" id="projectImagesTab" data-id="<%=@project.id%>">Images</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Images</a>
+                <a class="nav-link" href="#" id="projectHelpTab">Quick Help</a>
             </li>
         </ul>
+        <%= render partial: "files", locals: {project: @project} %>
         <%= render partial: "short_help", locals: {project: @project} %>
     </div>
 </div>

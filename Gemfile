@@ -71,6 +71,7 @@ gem "font-awesome-rails", '~> 4.7'
 gem 'chart-js-rails', '~> 0.1.6'
 gem 'bootstrap_notify', '~> 0.0.5'
 gem 'perfect-scrollbar-rails', '~> 0.6.15'
+gem 'hash_dot', '~> 2.4.1'
 
 group :development do
     gem "letter_opener"
@@ -79,4 +80,5 @@ group :development do
     gem 'capistrano-rails',   require: false
     gem 'capistrano-bundler', require: false
     gem 'capistrano3-puma',   require: false
+    gem 'pry'
 end

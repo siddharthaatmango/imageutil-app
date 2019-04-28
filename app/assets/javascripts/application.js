@@ -20,4 +20,5 @@
 //= require perfect-scrollbar
 //= require Chart.min
 //= require application/paper-dashboard
+//= require application/jstree.min
 //= require_tree ./imageutil
