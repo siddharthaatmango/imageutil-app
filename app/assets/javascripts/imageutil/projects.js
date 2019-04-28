@@ -155,7 +155,7 @@ function project_upload_file_to_node($node){
     u.registerUploadEvents();
 }
 
-var uploaderUtil = class UploaderUtil{
+var uploaderUtil = function UploaderUtil() {
     uploadInProgress = false;
     totalSize = 0;
     totalSize = 0;
