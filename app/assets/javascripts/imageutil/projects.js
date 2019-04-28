@@ -151,70 +151,68 @@ function customMenu($node) {
 function project_upload_file_to_node($node){
     console.log("project_upload_file_to_node" + $node);
     $('#uploadModal').modal('show');
-    var u = new uploaderUtil();
+    var u = new UploaderUtil();
     u.registerUploadEvents();
 }
 
-var uploaderUtil = function UploaderUtil() {
-    uploadInProgress = false;
-    totalSize = 0;
-    totalSize = 0;
-    dropZone = document.getElementById('drop-zone');
-    selectInput = document.getElementById('js-upload-files');
-    progressDiv = document.getElementById('upload-progress-items');
-    progressBar = document.getElementById('upload-progress-bar');
-    
-    startUpload = function(that, files) {
-        if(that.uploadInProgress){
-            return;
-        }
-        that.setUploadProgressBar(that.progressBar, 0);
-        var progressHtml = "";
-        for(var i=0; i<files.length; i++){
-            progressHtml += that.getUploadProgressHtml('default', 'Pending', files[i].name);
-            that.totalSize += files[i].size;
-        }
-        that.progressDiv.innerHTML = progressHtml;
-        that.uploadInProgress = true;
-    };
+function UploaderUtil() {
+    that = this; //This is becuase delegates use this inside :)
+    that.uploadInProgress = false;
+    that.totalSize = 0;
+    that.totalSize = 0;
+    that.dropZone = document.getElementById('drop-zone');
+    that.selectInput = document.getElementById('js-upload-files');
+    that.progressDiv = document.getElementById('upload-progress-items');
+    that.progressBar = document.getElementById('upload-progress-bar');
+}
 
-    registerUploadEvents = function() {
-        var that = this;
-        this.selectInput.addEventListener('change', function(e) {
-            var uploadFiles = e.currentTarget.files;
-            e.preventDefault()
+UploaderUtil.prototype.startUpload = function(that, files) {
+    if(that.uploadInProgress){
+        return;
+    }
+    that.setUploadProgressBar(that.progressBar, 0);
+    var progressHtml = "";
+    for(var i=0; i<files.length; i++){
+        progressHtml += that.getUploadProgressHtml('default', 'Pending', files[i].name);
+        that.totalSize += files[i].size;
+    }
+    that.progressDiv.innerHTML = progressHtml;
+    that.uploadInProgress = true;
+}
 
-            that.startUpload(that, uploadFiles)
-        });
+UploaderUtil.prototype.registerUploadEvents = function() {
+    var that = this;
+    this.selectInput.addEventListener('change', function(e) {
+        var uploadFiles = e.currentTarget.files;
+        e.preventDefault()
 
-        this.dropZone.ondrop = function(e) {
-            e.preventDefault();
-            this.className = 'upload-drop-zone';
+        that.startUpload(that, uploadFiles)
+    });
 
-            that.startUpload(that, e.dataTransfer.files)
-        }
+    this.dropZone.ondrop = function(e) {
+        e.preventDefault();
+        this.className = 'upload-drop-zone';
 
-        this.dropZone.ondragover = function() {
-            this.className = 'upload-drop-zone drop';
-            return false;
-        }
+        that.startUpload(that, e.dataTransfer.files)
+    }
 
-        this.dropZone.ondragleave = function() {
-            this.className = 'upload-drop-zone';
-            return false;
-        }
-    };
+    this.dropZone.ondragover = function() {
+        this.className = 'upload-drop-zone drop';
+        return false;
+    }
 
-    setUploadProgressBar = function(value){
-        this.progressDiv.innerHTML = `<span class="sr-only">${value}% Complete</span>`;
-        this.progressDiv.setAttribute('style', `width: ${value}%;`);
-        this.progressDiv.setAttribute('aria-valuenow', value);
-    };
+    this.dropZone.ondragleave = function() {
+        this.className = 'upload-drop-zone';
+        return false;
+    }
+}
 
-    getUploadProgressHtml = function(progress_class, progress_status, progress_file){
-        return `<a href="#" class="list-group-item list-group-item-${progress_class}">
-                    <span class="badge alert-${progress_class} pull-right">${progress_status}</span>
-                    ${progress_file}
-                </a>`;
-    };
+UploaderUtil.prototype.setUploadProgressBar = function(value){
+    this.progressDiv.innerHTML = "<span class=\"sr-only\">"+value+"% Complete</span>";
+    this.progressDiv.setAttribute('style', "width: "+value+"%;");
+    this.progressDiv.setAttribute('aria-valuenow', value);
+}
+
+UploaderUtil.prototype.getUploadProgressHtml = function(pc, ps, pf){
+    return "<a href=\"#\" class=\"list-group-item list-group-item-"+pc+"\"><span class=\"badge alert-"+pc+" pull-right\">"+ps+"</span>"+pf+"</a>";
 }
