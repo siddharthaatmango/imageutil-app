@@ -12,6 +12,15 @@ class Folder < ApplicationRecord
 
   before_save :set_path
 
+  def tokenize
+    token = "#{self.user_id}_#{self.project_id}_#{SecureRandom.hex(4)}_#{(DateTime.now + 1.hour).to_i}"
+    self.update_columns({upload_token: token})
+    token
+  end
+  def upload_host
+    Rails.env.production? ? 'https://imagetransform.io' : 'http://127.0.0.1:9090'
+  end
+
   def self.get_node(project_id, folder_id)
     r = []
     folders = Folder.where(project_id: project_id, folder_id: folder_id)

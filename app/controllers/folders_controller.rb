@@ -1,7 +1,7 @@
 class FoldersController < ApplicationController
     before_action :authenticate_user!
     before_action :set_project
-    before_action :set_folder, only: [:index, :update]
+    before_action :set_folder, only: [:index, :update, :tokenize]
 
     def index
       if params[:id]=="#" || !@folder
@@ -33,6 +33,10 @@ class FoldersController < ApplicationController
       end
     end
 
+    def tokenize
+      render json: {upload_token: @folder.tokenize, upload_host: @folder.upload_host}, status: :ok
+    end
+
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_project
@@ -41,7 +45,11 @@ class FoldersController < ApplicationController
 
       # Use callbacks to share common setup or constraints between actions.
       def set_folder
-        @folder = Folder.where(user_id: current_user.id, project_id: params[:project_id], id: params[:id]).first unless params[:id]=="#"
+        if params[:folder_id]
+          @folder = Folder.where(user_id: current_user.id, project_id: params[:project_id], id: params[:folder_id]).first unless params[:folder_id]=="#"
+        else
+          @folder = Folder.where(user_id: current_user.id, project_id: params[:project_id], id: params[:id]).first unless params[:id]=="#"
+        end
       end
 
       # Never trust parameters from the scary internet, only allow the white list through.
