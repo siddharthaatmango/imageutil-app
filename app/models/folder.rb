@@ -31,8 +31,8 @@ class Folder < ApplicationRecord
         icon: f.is_file ? "jstree-file" : "jstree-folder",
         li_attr: {
           parent_id: f.folder_id,
-          is_readonly: false,
-          can_add: true,
+          can_add_file: f.is_file ? false : true,
+          can_add_folder: f.is_file ? false : true,
         },
         state:{
           opened: false,
@@ -52,8 +52,9 @@ class Folder < ApplicationRecord
         id: 'ROOT',
         text: prj.name,
         li_attr: {
-          is_readonly: true,
-          can_add: false,
+          parent_id: "",
+          can_add_file: false,
+          can_add_folder: false,
         },
         state:{
           opened: true,
@@ -65,8 +66,9 @@ class Folder < ApplicationRecord
               id: 'OTF',
               text: 'On The Fly',
               li_attr: {
-                is_readonly: true,
-                can_add: false,
+                parent_id: "",
+                can_add_file: false,
+                can_add_folder: false,
               },
               state:{
                 opened: false,
@@ -79,8 +81,9 @@ class Folder < ApplicationRecord
               id: 'M',
               text: 'Media',
               li_attr: {
-                is_readonly: true,
-                can_add: true,
+                parent_id: "",
+                can_add_file: false,
+                can_add_folder: true,
               },
               state:{
                 opened: true,
@@ -98,8 +101,10 @@ class Folder < ApplicationRecord
 
   private
     def set_path
-        self.path = self.name.gsub(/\W/, '_')
-        parent = Folder.find_by_id(self.folder_id) if self.folder_id
-        self.path = "#{parent.path}/#{self.path}" if parent
+        unless self.is_file
+          self.path = "#{self.user_id}/#{self.project_id}/#{self.name.gsub(/\W/, '_').downcase}"
+          parent = Folder.find_by_id(self.folder_id) if self.folder_id
+          self.path = "#{parent.path}/#{self.name.gsub(/\W/, '_').downcase}" if parent
+        end
     end
 end

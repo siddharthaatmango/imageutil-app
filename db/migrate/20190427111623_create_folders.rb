@@ -7,9 +7,8 @@ class CreateFolders < ActiveRecord::Migration[5.2]
       t.boolean :is_file
       t.string :name
       t.string :path, index: { unique: true }
-
+      t.string :upload_token, index: { unique: true }
       t.timestamps
     end
-    add_index :folders, [:user_id, :project_id, :path], unique: true, name: "index_uniq_key"
   end
 end
