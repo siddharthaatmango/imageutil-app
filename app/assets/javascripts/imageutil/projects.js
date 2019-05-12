@@ -31,6 +31,18 @@ $(document).on('turbolinks:load', function () {
         "plugins": ["wholerow", "contextmenu"],
         "contextmenu": { "items": customMenu }
     })
+        .bind("select_node.jstree", function (event, data) {
+            console.log(event.type);
+            var fi = $("#files_info");
+            if(data.node.li_attr.is_file){
+                fi.fadeIn();
+                fi.find('.card-img-top').attr('src', data.node.li_attr.path);
+                fi.find(".card-title").html(data.node.text);
+                fi.find(".card-text").html("Image Url:" + data.node.li_attr.path);
+            }else{
+                fi.fadeOut();
+            }
+        })
         .bind("create_node.jstree", function (event, data) {
             console.log(event.type);
             projects_is_creating_folder_node = true;

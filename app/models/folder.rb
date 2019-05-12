@@ -18,12 +18,19 @@ class Folder < ApplicationRecord
     token
   end
   def upload_host
-    Rails.env.production? ? 'https://imagetransform.io' : 'http://127.0.0.1:9090'
+    # Rails.env.production? ? 'https://imagetransform.io' : 'http://127.0.0.1:9090'
+    'https://imagetransform.io'
+  end
+  def preview(transform="s:320x240", is_smart=false)
+    url = "https://imagetransform.io/#{self.project.uuid}/media/#{transform}"
+    url = "#{url}/smart" if is_smart
+    url = "#{url}/#{self.path.sub('storage/', '')}" 
+    url
   end
 
   def self.get_node(project_id, folder_id)
     r = []
-    folders = Folder.where(project_id: project_id, folder_id: folder_id)
+    folders = Folder.includes(:project).where(project_id: project_id, folder_id: folder_id)
     folders.each do |f|
       r << {
         id: f.id,
@@ -33,6 +40,9 @@ class Folder < ApplicationRecord
           parent_id: f.folder_id,
           can_add_file: f.is_file ? false : true,
           can_add_folder: f.is_file ? false : true,
+          is_file: f.is_file,
+          path: f.is_file ? f.preview : f.path,
+          created_at: f.created_at
         },
         state:{
           opened: false,
@@ -55,6 +65,8 @@ class Folder < ApplicationRecord
           parent_id: "",
           can_add_file: false,
           can_add_folder: false,
+          is_file: false,
+          path: "/"
         },
         state:{
           opened: true,
@@ -69,6 +81,8 @@ class Folder < ApplicationRecord
                 parent_id: "",
                 can_add_file: false,
                 can_add_folder: false,
+                is_file: false,
+                path: "otf/"
               },
               state:{
                 opened: false,
@@ -84,10 +98,12 @@ class Folder < ApplicationRecord
                 parent_id: "",
                 can_add_file: false,
                 can_add_folder: true,
+                is_file: false,
+                path: "media/"
               },
               state:{
                 opened: true,
-                selected: false,
+                selected: true,
                 disabled: false
               },
               children: Folder.get_node(prj.id, nil)

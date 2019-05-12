@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_27_111623) do
+ActiveRecord::Schema.define(version: 2019_05_11_014448) do
 
   create_table "administrators", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "name", default: "", null: false
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 2019_04_27_111623) do
   create_table "images", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "project_id"
-    t.string "key"
+    t.string "store_key"
     t.string "origin"
     t.string "origin_path"
     t.string "transformation"
@@ -73,9 +73,9 @@ ActiveRecord::Schema.define(version: 2019_04_27_111623) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "host_domain", default: "imagetransform.io"
-    t.index ["key"], name: "index_images_on_key", unique: true
     t.index ["origin", "origin_path", "transformation", "is_smart"], name: "index_uniq_path", unique: true
     t.index ["project_id"], name: "index_images_on_project_id"
+    t.index ["store_key"], name: "index_images_on_store_key", unique: true
     t.index ["user_id"], name: "index_images_on_user_id"
   end
 
