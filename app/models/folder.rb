@@ -28,7 +28,7 @@ class Folder < ApplicationRecord
     url
   end
 
-  def self.get_node(project_id, folder_id)
+  def self.get_node(project_id, folder_id, is_support=false)
     r = []
     folders = Folder.includes(:project).where(project_id: project_id, folder_id: folder_id)
     folders.each do |f|
@@ -38,8 +38,8 @@ class Folder < ApplicationRecord
         icon: f.is_file ? "jstree-file" : "jstree-folder",
         li_attr: {
           parent_id: f.folder_id,
-          can_add_file: f.is_file ? false : true,
-          can_add_folder: f.is_file ? false : true,
+          can_add_file: f.is_file ? false : !is_support,
+          can_add_folder: f.is_file ? false : !is_support,
           is_file: f.is_file,
           path: f.is_file ? f.preview : f.path,
           created_at: f.created_at
@@ -55,7 +55,7 @@ class Folder < ApplicationRecord
     r
   end
 
-  def self.root_node(projects)
+  def self.root_node(projects, is_support=false)
     h = []
     projects.each do |prj|
       h << {
@@ -64,51 +64,16 @@ class Folder < ApplicationRecord
         li_attr: {
           parent_id: "",
           can_add_file: false,
-          can_add_folder: false,
+          can_add_folder: !is_support,
           is_file: false,
-          path: "/"
+          path: "media/"
         },
         state:{
           opened: true,
-          selected: false,
-          disabled: true
+          selected: true,
+          disabled: false
         },
-        children: [
-          {
-              id: 'OTF',
-              text: 'On The Fly',
-              li_attr: {
-                parent_id: "",
-                can_add_file: false,
-                can_add_folder: false,
-                is_file: false,
-                path: "otf/"
-              },
-              state:{
-                opened: false,
-                selected: false,
-                disabled: true
-              },
-              children: false
-          },
-          {
-              id: 'M',
-              text: 'Media',
-              li_attr: {
-                parent_id: "",
-                can_add_file: false,
-                can_add_folder: true,
-                is_file: false,
-                path: "media/"
-              },
-              state:{
-                opened: true,
-                selected: true,
-                disabled: false
-              },
-              children: Folder.get_node(prj.id, nil)
-          }
-        ]
+        children: Folder.get_node(prj.id, nil, is_support)
       }.to_dot
     end
     h

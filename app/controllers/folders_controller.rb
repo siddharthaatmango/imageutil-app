@@ -5,9 +5,9 @@ class FoldersController < ApplicationController
 
     def index
       if params[:id]=="#" || !@folder
-        @root = Folder.root_node([@project])
+        @root = Folder.root_node([@project], current_user.is_support?)
       else
-        @root = Folder.get_node(@project.id, @folder.id)
+        @root = Folder.get_node(@project.id, @folder.id, current_user.is_support?)
       end
       render json: @root
     end
@@ -40,15 +40,15 @@ class FoldersController < ApplicationController
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_project
-        @project = Project.where(user_id: current_user.id, id: params[:project_id]).first
+        @project = current_user.is_support? ?  Project.where(id: params[:project_id]).first : Project.where(user_id: current_user.id, id: params[:project_id]).first
       end
 
       # Use callbacks to share common setup or constraints between actions.
       def set_folder
         if params[:folder_id]
-          @folder = Folder.where(user_id: current_user.id, project_id: params[:project_id], id: params[:folder_id]).first unless params[:folder_id]=="#"
+          @folder = current_user.is_support? ? Folder.where(project_id: params[:project_id], id: params[:folder_id]).first  : Folder.where(user_id: current_user.id, project_id: params[:project_id], id: params[:folder_id]).first unless params[:folder_id]=="#"
         else
-          @folder = Folder.where(user_id: current_user.id, project_id: params[:project_id], id: params[:id]).first unless params[:id]=="#"
+          @folder = current_user.is_support? ? Folder.where(project_id: params[:project_id], id: params[:id]).first : Folder.where(user_id: current_user.id, project_id: params[:project_id], id: params[:id]).first unless params[:id]=="#"
         end
       end
 

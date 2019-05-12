@@ -38,7 +38,7 @@ $(document).on('turbolinks:load', function () {
                 fi.fadeIn();
                 fi.find('.card-img-top').attr('src', data.node.li_attr.path);
                 fi.find(".card-title").html(data.node.text);
-                fi.find(".card-text").html("Image Url:" + data.node.li_attr.path);
+                fi.find(".card-text").html(data.node.li_attr.path);
             }else{
                 fi.fadeOut();
             }
@@ -216,8 +216,9 @@ UploaderUtil.prototype.startUpload = function (files) {
 UploaderUtil.prototype.uploadFile = function (i, file) {
     var ajaxData = new FormData();
     ajaxData.append('file', file);
+    var fileName = file.name.replace(/[^a-z0-9._-]/gi, '_').toLowerCase();
     $.ajax({
-        url: that.uploadHost+'/upload/'+that.uploadToken+'/'+encodeURIComponent(file.name),
+        url: that.uploadHost+'/upload/'+that.uploadToken+'/'+fileName,
         type: 'POST',
         data: ajaxData,
         contentType: false,
