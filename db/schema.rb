@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_11_014448) do
+ActiveRecord::Schema.define(version: 2019_05_13_003721) do
 
   create_table "administrators", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "name", default: "", null: false
@@ -53,6 +53,9 @@ ActiveRecord::Schema.define(version: 2019_05_11_014448) do
     t.string "upload_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "original_name", default: ""
+    t.integer "file_size", default: 0
+    t.string "mime_type", default: ""
     t.index ["folder_id"], name: "index_folders_on_folder_id"
     t.index ["path"], name: "index_folders_on_path", unique: true
     t.index ["project_id"], name: "index_folders_on_project_id"
