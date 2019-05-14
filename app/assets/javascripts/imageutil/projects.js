@@ -18,10 +18,14 @@ $(document).on('turbolinks:load', function () {
         $(".projectFiles").show();
     });
 
+    var url = "/projects/ALL/folders.json";
+    if($('#projectImagesTab').length == 1)
+        url = "/projects/" + $('#projectImagesTab').data('id') + "/folders.json";
+
     $('#jstree_div').jstree({
         'core': {
             'data': {
-                "url": "/projects/" + $('#projectImagesTab').data('id') + "/folders.json",
+                "url": url,
                 "data": function (node) {
                     return { "id": node.id };
                 }

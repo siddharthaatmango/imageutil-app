@@ -4,8 +4,8 @@ class FoldersController < ApplicationController
     before_action :set_folder, only: [:index, :update, :tokenize]
 
     def index
-      if params[:id]=="#" || !@folder
-        @root = Folder.root_node([@project], current_user.is_support?)
+      if !@folder
+        @root = Folder.root_node(@projects, current_user.is_support?)
       else
         @root = Folder.get_node(@project.id, @folder.id, current_user.is_support?)
       end
@@ -40,15 +40,23 @@ class FoldersController < ApplicationController
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_project
-        @project = current_user.is_support? ?  Project.where(id: params[:project_id]).first : Project.where(user_id: current_user.id, id: params[:project_id]).first
+        @project_id = params[:project_id]
+        if @project_id=='ALL'
+          @projects = current_user.is_support? ? Project.all : Project.where(user_id: current_user.id).to_a
+        else
+          @project = current_user.is_support? ?  Project.where(id: @project_id).first : Project.where(user_id: current_user.id, id: @project_id).first
+          @projects = [@project]
+        end
       end
 
       # Use callbacks to share common setup or constraints between actions.
       def set_folder
-        if params[:folder_id]
-          @folder = current_user.is_support? ? Folder.where(project_id: params[:project_id], id: params[:folder_id]).first  : Folder.where(user_id: current_user.id, project_id: params[:project_id], id: params[:folder_id]).first unless params[:folder_id]=="#"
-        else
-          @folder = current_user.is_support? ? Folder.where(project_id: params[:project_id], id: params[:id]).first : Folder.where(user_id: current_user.id, project_id: params[:project_id], id: params[:id]).first unless params[:id]=="#"
+        @folder_id = params[:folder_id] ? params[:folder_id] : params[:id]
+        unless @folder_id=="#"
+          @folder = current_user.is_support? ? Folder.where(id: @folder_id).first  : Folder.where(user_id: current_user.id, id: @folder_id).first
+
+          params[:project_id] = @project_id = @folder.project_id
+          @project = current_user.is_support? ?  Project.where(id: @project_id).first : Project.where(user_id: current_user.id, id: @project_id).first unless @project
         end
       end
 

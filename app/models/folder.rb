@@ -57,23 +57,43 @@ class Folder < ApplicationRecord
 
   def self.root_node(projects, is_support=false)
     h = []
+    is_all = projects.count > 1 ? true : false
     projects.each do |prj|
       h << {
-        id: 'ROOT',
+        id: "PROJECT_#{prj.id}",
         text: prj.name,
         li_attr: {
           parent_id: "",
           can_add_file: false,
           can_add_folder: !is_support,
           is_file: false,
-          path: "media/"
+          path: "/"
+        },
+        state:{
+          opened: true,
+          selected: !is_all,
+          disabled: false
+        },
+        children: Folder.get_node(prj.id, nil, is_support)
+      }.to_dot
+    end
+    if is_all
+      h = {
+        id: 'ROOT',
+        text: 'Origins',
+        li_attr: {
+          parent_id: "",
+          can_add_file: false,
+          can_add_folder: !is_support,
+          is_file: false,
+          path: "/"
         },
         state:{
           opened: true,
           selected: true,
           disabled: false
         },
-        children: Folder.get_node(prj.id, nil, is_support)
+        children: h
       }.to_dot
     end
     h

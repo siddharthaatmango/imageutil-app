@@ -1,0 +1,9 @@
+<% content_for :page_title do %>
+  Uploaded Files
+<% end %>
+
+<div class="row mb-2">
+    <div class="col-md-12">
+        <%= render partial: "/projects/files", locals: {project: @project} %>
+    </div>
+</div>

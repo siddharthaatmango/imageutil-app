@@ -9,5 +9,8 @@ Rails.application.routes.draw do
   resources :analytics
   resources :messages
   resources :invoices
+
+  match 'media' => 'media#index', via: [:get]
+  
   root to: "home#index"
 end
