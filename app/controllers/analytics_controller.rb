@@ -12,11 +12,20 @@ class AnalyticsController < ApplicationController
       @uniqUsageData["#{a.strftime("%b %d")}"] = analytics[a.to_s] ? analytics[a.to_s].sum(&:uniq_request) : 0 #rand(100)
       @totalUsageData["#{a.strftime("%b %d")}"] = analytics[a.to_s] ? analytics[a.to_s].sum(&:total_request) : 0 #rand(100)
     end
+    @total_limit = @totalUsageData.values.sum
     @max_limit = @totalUsageData.values.max
     @min_limit = @totalUsageData.values.min
     @max_limit = @max_limit > 10 ? @max_limit : 10
     @min_limit = @min_limit > 0 ? @min_limit : 1
 
     @images = current_user.is_support? ? Image.last(4) : Image.where(user_id: current_user.id).last(4)
+
+    @total_space_size_image = current_user.is_support? ? Image.sum(&:file_size) : Image.where(user_id: current_user.id).sum(&:file_size)
+
+    @total_space_size_folder = current_user.is_support? ? Folder.sum(&:file_size) : Folder.where(user_id: current_user.id).sum(&:file_size)
+    
+    @total_space_size = @total_space_size_image + @total_space_size_folder
+
+    @total_count_folder = current_user.is_support? ? Folder.where(is_file: true).count : Folder.where(user_id: current_user.id, is_file: true).count
   end
 end

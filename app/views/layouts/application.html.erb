@@ -18,6 +18,7 @@
     <link rel="manifest" href="<%= asset_path "favicon/site.webmanifest" %>">
 
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -44,25 +45,25 @@
         <ul class="nav">
           <li class="<%='active' if controller_name=='analytics'%> ">
             <a href="/analytics">
-              <i class="nc-icon nc-bank"></i>
+              <i class="fas fa-home"></i>
               <p>Dashboard</p>
             </a>
           </li>
           <li class="<%='active' if controller_name=='projects'%> ">
             <a href="/projects">
-              <i class="nc-icon nc-diamond"></i>
+              <i class="far fa-folder"></i>
               <p>Origins</p>
             </a>
           </li>
           <li class="<%='active' if controller_name=='mail'%> ">
             <a href="/messages">
-              <i class="nc-icon nc-pin-3"></i>
+              <i class="far fa-envelope-open"></i>
               <p>Support</p>
             </a>
           </li>
           <li class="<%='active' if controller_name=='invoices'%> ">
             <a href="/invoices">
-              <i class="nc-icon nc-bell-55"></i>
+              <i class="far fa-money-bill-alt"></i>
               <p>Billing</p>
             </a>
           </li>
@@ -95,7 +96,7 @@
 
             <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
               <div class="input-group">
-                <% if controller_name=="projects" && !current_user.is_support? %>
+                <% if !current_user.is_support? %>
                 <a class="btn btn-outline-success" href="/projects/new">
                   <i class="fa fa-plus"></i> Add Origin
                 </a>
