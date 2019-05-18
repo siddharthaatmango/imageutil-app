@@ -1,0 +1,30 @@
+<div class="card">
+<div class="card-body">
+    <% if current_user %>
+    <h5 class="card-title text-muted text-uppercase">Pro</h5>
+    <h6 class="card-price">$49<span class="period">/month</span></h6>
+    <% else %>
+    <h5 class="card-title text-muted text-uppercase text-center">Pro</h5>
+    <h6 class="card-price text-center">$49<span class="period">/month</span></h6>
+    <% end %>
+    <hr>
+    <ul class="fa-ul">
+    <li><span class="fa-li"><i class="fas fa-check"></i></span><strong>Unlimited Requests</strong></li>
+    <li><span class="fa-li"><i class="fas fa-check"></i></span>1TB Storage</li>
+    <li><span class="fa-li"><i class="fas fa-check"></i></span>Unlimited Origins</li>
+    <li><span class="fa-li"><i class="fas fa-check"></i></span>12-hr SLA support tickets/li>
+    <li><span class="fa-li"><i class="fas fa-check"></i></span>Email support</li>
+    <li><span class="fa-li"><i class="fas fa-check"></i></span>Phone Support</li>
+    <li><span class="fa-li"><i class="fas fa-check"></i></span><strong>Dedicated</strong> Workers</li>
+    </ul>
+    <% if current_user && current_user.plan==2 %>
+    <a href="#" class="btn text-uppercase" disabled>Current Plan</a>
+    <% end %>
+    <% if current_user && current_user.plan==1 %>
+    <a href="#" class="btn btn-danger text-uppercase">Upgrade Now</a>
+    <% end %>
+    <% unless current_user %>
+    <a href="/users/sign_up?plan=pro" class="btn btn-block btn-primary text-uppercase">Get Started</a>
+    <% end %>
+</div>
+</div>

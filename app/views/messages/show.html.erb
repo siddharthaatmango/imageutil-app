@@ -5,29 +5,57 @@
 <div class="row mb-2">
   <div class="col-md-12">
 
-    <p class="h6"><%=@message.subject%></p>
-    <p class="lead"><%=@message.body%></p>
-    <hr class="my-4">
 
-    <%= form_with(model: @reply, local: true) do |form| %>
-      <%= form.hidden_field :message_id %>
-      <%= form.hidden_field :subject %>
-      <div class="form-group">
-        <%= form.text_area :body, class: "form-control" %>
-      </div>
-      <div class="form-group" style="margin-left: 20px;">
-        <input type="checkbox" class="form-check-input" id="close_tkt" name="close_tkt">
-        <label class="form-check-label" for="close_tkt">Close This Ticket</label>
-      </div>
-      <button type="submit" class="btn btn-outline-primary">Reply</button>
-    <% end %>
-    
+    <div class="media support_list_item">
+      <%= image_tag "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(@message.user.email)}", class: "mr-3 support_image" %>
+      <div class="media-body">
+        <div class="support_time"><%=time_ago_in_words(@message.created_at)%></div>
+        <div class="support_status">[<%=@message.status_name(current_user.is_support?)%>]</div>
 
-    <% @message.replies.each do |m| %>
-    <hr class="my-4">
-    <p class="lead"><%= m.body %></p>
-    <small>~ <%=m.user.name ? m.user.name : m.user.email%>, <%=time_ago_in_words(m.created_at)%></small>
-    <% end %>
+        <div class="support_title"><%=@message.user.name ? @message.user.name : @message.user.email%></div>
+        <div class="support_subject">Subject: <%=@message.subject%></div>
+        
+        <%=@message.body%>
+
+        <div class="media reply_item mt-3">
+          <a class="mr-3" href="#">
+          <%= image_tag "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(current_user.email)}", class: "ml-3 reply_image" %>
+          </a>
+          <div class="media-body">
+            <div class="support_reply_form">
+              <%= form_with(model: @reply, local: true) do |form| %>
+                <%= form.hidden_field :message_id %>
+                <%= form.hidden_field :subject %>
+                <div class="form-group">
+                  <%= form.text_area :body, class: "form-control" %>
+                </div>
+                <div class="form-group" style="margin-left: 20px;">
+                  <input type="checkbox" class="form-check-input" id="close_tkt" name="close_tkt">
+                  <label class="form-check-label" for="close_tkt">Close This Ticket</label>
+                </div>
+                <button type="submit" class="btn btn-outline-primary">Reply</button>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+
+        <% @message.replies.each do |m| %>
+        <div class="media reply_item mt-3">
+          <a class="mr-3" href="#">
+          <%= image_tag "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(m.user.email)}", class: "ml-3 reply_image" %>
+          </a>
+          <div class="media-body">
+            <div class="reply_time"><%=time_ago_in_words(m.created_at)%></div>
+            <div class="reply_title"><%=m.user.name ? m.user.name : m.user.email%></div>
+
+            <%=m.body%>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+
 
   </div>
 </div>

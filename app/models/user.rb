@@ -5,6 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :trackable, :omniauthable
 
+  PLANS = ['FREE', 'PLUS', 'PRO'].freeze
+
+  validates :plan, presence: true, inclusion: { in: 0..(PLANS.length-1),
+    message: "Plan is not valid" }
 
   # instead of deleting, indicate the user requested a delete & timestamp it  
   def soft_delete  

@@ -67,3 +67,43 @@ p.urlstr {
     color: #222;
     border-color: #222;
 }
+
+.support_list_item{
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin-bottom: 10px; 
+}
+.support_title{
+    margin-bottom: 5px;
+}
+.support_subject{
+    font-weight: 600;
+}
+.support_status{
+    position: absolute;
+    right: 40px;
+}
+.support_time{
+    position: absolute;
+    right: 240px;
+}
+.support_image{
+    width: 48px;
+}
+
+.reply_item{
+    border-left: 1px solid #ccc;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-bottom: 10px; 
+}
+.reply_title{
+    margin-bottom: 5px;
+}
+.reply_time{
+    position: absolute;
+    right: 40px;
+}
+.reply_image{
+    width: 32px;
+}

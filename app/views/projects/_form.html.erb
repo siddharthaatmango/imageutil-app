@@ -10,7 +10,8 @@
       </ul>
     </div>
 <% end %>
-
+<div class="card card-user">
+<div class="card-body">
 <%= form_with(model: project, local: true) do |f| %>
 
   <%= f.hidden_field :uuid %>
@@ -37,3 +38,5 @@
     <%= f.submit 'Save', class: 'btn btn-outline-primary' unless current_user.is_support?%>
   </div>
 <% end %>
+</div>
+</div>

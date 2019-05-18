@@ -3,45 +3,52 @@
 <% end %>
 
 <!-- Page Content -->
-<div class="col-md-8">
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-      <%= bootstrap_devise_error_messages! %>
-          <div class="form-group row">
-            <%= f.label :name, class: "col-4 col-form-label" %>
-            <div class="col-8">
+
+<div class="row mb-2">
+    <div class="col-md-6">
+      <div class="card card-user">
+        <div class="card-header">
+          <h5 class="card-title">Edit Profile</h5>
+        </div>
+        <div class="card-body">
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+        <%= bootstrap_devise_error_messages! %>
+          <div class="form-group">
+            <div>
+              <%= f.label :name, class: "col-form-label" %>
               <%= f.text_field :name, autofocus: true, autocomplete: false, class: 'form-control here' %>
             </div>
           </div>
 
-          <div class="form-group row">
-            <%= f.label :email, class: "col-4 col-form-label"  %>
-            <div class="col-8">
-              <%= f.email_field :email, autofocus: true, autocomplete: false, class: 'form-control here' %>
+          <div class="form-group">
+            <div>
+              <%= f.label :email, class: "col-form-label"  %>
+              <%= f.email_field :email, autofocus: true, autocomplete: false, class: 'form-control here', readonly: true %>
             </div>
           </div>
-          <div class="form-group row">
-            <%= f.label :password, class: "col-4 col-form-label"  %>
-            <div class="col-8">
+          <div class="form-group">
+            <div>
+              <%= f.label :password, class: "col-form-label"  %>
               <%= f.password_field :password, autocomplete: false, class: 'form-control here' %>
               <small class="form-text text-muted"><%= t('.leave_blank_if_you_don_t_want_to_change_it') %></small>
             </div>
           </div>
-          <div class="form-group row">
-            <%= f.label :password_confirmation, class: "col-4 col-form-label"  %>
-            <div class="col-8">
+          <div class="form-group">
+            <div>
+              <%= f.label :password_confirmation, class: "col-form-label"  %>
               <%= f.password_field :password_confirmation, autocomplete: false, class: 'form-control here' %>
               <small class="form-text text-muted"><%= t('.we_need_your_current_password_to_confirm_your_changes') %></small>
             </div>
           </div>
-          <div class="form-group row">
-            <%= f.label :current_password, class: "col-4 col-form-label"  %>
-            <div class="col-8">
+          <div class="form-group">
+            <div>
+              <%= f.label :current_password, class: "col-form-label"  %>
               <%= f.password_field :current_password, autocomplete: false, class: 'form-control here' %>
             </div>
           </div>
-          <div class="form-group row">
-            <div class="offset-4 col-8">
-              <%= f.submit t('.update'), class: 'btn btn-primary' %>
+          <div class="form-group">
+            <div>
+              <%= f.submit t('.update'), class: 'btn btn-outline-primary' %>
             </div>
           </div>
 <%
@@ -56,4 +63,13 @@
 <%
 =end%>
         <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <%=render partial: "/common/plan_#{current_user.plan}"%>
+    </div>
+    <div class="col-md-3">
+      <%=render partial: "/common/plan_#{current_user.plan + 1}" if current_user.plan < User::PLANS.length-1%>
+    </div>
 </div>

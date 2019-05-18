@@ -7,16 +7,33 @@
 
     <% @messages.each do |message| %>
     <% m = message.last_message%>
-    <div class="card <%=message.status_class(current_user.is_support?)%> mb-3">
-      <div class="card-header">[<%=message.status_name(current_user.is_support?)%>] <%=message.subject%></div>
-      <div class="card-body">
-        <p class="lead">
-          <%= m.body %>
-        </p>
-        <small>~ <%=m.user.name ? m.user.name : m.user.email%>, <%=time_ago_in_words(m.created_at)%></small>
+
+    <div class="media support_list_item">
+      <%= image_tag "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(message.user.email)}", class: "mr-3 support_image" %>
+      <div class="media-body">
+        <div class="support_time"><%=time_ago_in_words(message.created_at)%></div>
+        <div class="support_status">[<%=message.status_name(current_user.is_support?)%>]</div>
+
+        <div class="support_title"><%=message.user.name ? message.user.name : message.user.email%></div>
+        <div class="support_subject">Subject: <%=message.subject%></div>
+        
+        <%=message.body%>
+
+        <div class="media reply_item mt-3">
+          <a class="mr-3" href="#">
+          <%= image_tag "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(m.user.email)}", class: "ml-3 reply_image" %>
+          </a>
+          <div class="media-body">
+            <div class="reply_time"><%=time_ago_in_words(m.created_at)%></div>
+            <div class="reply_title"><%=m.user.name ? m.user.name : m.user.email%></div>
+
+            <%=m.body%>
+          </div>
+        </div>
+        <%= link_to 'Show', message, class: "btn btn-outline-default btn-sm" %>
       </div>
-      <div class="card-footer"><%= link_to 'Show', message, class: "btn btn-outline-default btn-sm" %></div>
     </div>
+
     <% end %>
 
   </div>
