@@ -13,7 +13,7 @@
 !/log/.keep
 !/tmp/.keep
 
-# Ignore uploaded files in development
+# Ignore Media Library in development
 /storage/*
 !/storage/.keep
 
