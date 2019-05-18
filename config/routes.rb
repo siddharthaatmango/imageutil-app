@@ -12,5 +12,7 @@ Rails.application.routes.draw do
 
   match 'media' => 'media#index', via: [:get]
   match 'pricing' => 'home#pricing', via: [:get]
+  match 'terms' => 'home#terms', via: [:get]
+  match 'privacy' => 'home#privacy', via: [:get]
   root to: "home#index"
 end
