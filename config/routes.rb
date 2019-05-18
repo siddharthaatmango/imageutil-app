@@ -11,6 +11,6 @@ Rails.application.routes.draw do
   resources :invoices
 
   match 'media' => 'media#index', via: [:get]
-  
+  match 'pricing' => 'home#pricing', via: [:get]
   root to: "home#index"
 end
