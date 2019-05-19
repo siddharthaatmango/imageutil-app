@@ -20,6 +20,7 @@
         <%=message.body%>
 
         <div class="media reply_item mt-3">
+          <% if m.id!=message.id %>
           <a class="mr-3" href="#">
           <%= image_tag "https://www.gravatar.com/avatar/#{Digest::MD5.hexdigest(m.user.email)}", class: "ml-3 reply_image" %>
           </a>
@@ -29,7 +30,9 @@
 
             <%=m.body%>
           </div>
+          <% end %>
         </div>
+         
         <%= link_to 'Show', message, class: "btn btn-outline-default btn-sm" %>
       </div>
     </div>
@@ -40,5 +43,5 @@
 </div>
 
 <p class="lead">
-  <%= link_to 'New Support Request', new_message_path, class: "btn btn-success" %>
+  <%= link_to 'New Support Request', new_message_path, class: "btn btn-success" unless current_user.is_support %>
 </p>

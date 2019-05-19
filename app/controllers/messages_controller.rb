@@ -31,6 +31,7 @@ class MessagesController < ApplicationController
       if msg.save
         parent_msg = Message.where(id: msg.message_id).first if msg.message_id
         @message = parent_msg ? parent_msg : msg
+        parent_msg ? MessageMailer.new_reply(parent_msg, msg).deliver : MessageMailer.new_message(msg).deliver
         format.html { redirect_to @message, notice: 'Message was successfully created.' }
         format.json { render :show, status: :created, location: @message }
       else
