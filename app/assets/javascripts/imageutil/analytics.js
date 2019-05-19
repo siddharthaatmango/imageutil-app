@@ -71,9 +71,9 @@ $(document).on('turbolinks:load',
       });
     }
 
-    var ctx2 = document.getElementById('bandWidthChart').getContext("2d");
+    var ctx2 = document.getElementById('bandWidthChart');
     if (ctx2!=null){
-      myChart = new Chart(ctx2, {
+      myChart = new Chart(ctx2.getContext("2d"), {
         type: 'pie',
         data: {
           labels: ['Total Bandwidth', 'Used Bandwith'],

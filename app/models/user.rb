@@ -6,7 +6,7 @@ class User < ApplicationRecord
          :confirmable, :trackable, :omniauthable
 
   PLANS = ['FREE', 'PLUS', 'PRO'].freeze
-  BANDWIDTH = [1, 10, 50].freeze
+  BANDWIDTH = [5, 50, 500].freeze
 
   validates :plan, presence: true, inclusion: { in: 0..(PLANS.length-1),
     message: "Plan is not valid" }
