@@ -64,8 +64,8 @@
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">Total Requests</p>
-                      <p class="card-title"><%=@total_limit%>
+                      <p class="card-category">Total Bandwidth</p>
+                      <p class="card-title"><%=number_to_human_size(@total_bytes, precision: 2)%>
                         </p><p>
                     </p></div>
                   </div>
@@ -74,12 +74,11 @@
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-calendar-o"></i> Last 30 days
+                  <i class="fa fa-calendar-o"></i> Current Month
                 </div>
               </div>
             </div>
           </div>
-
 
 
           <div class="col-lg-3 col-md-6 col-sm-6">

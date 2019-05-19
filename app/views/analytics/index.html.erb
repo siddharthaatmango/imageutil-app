@@ -8,18 +8,36 @@ var uniq_count_in_month = <%=@uniqUsageData.values.to_s%>;
 var total_count_in_month = <%=@totalUsageData.values.to_s%>;
 var max_limit = <%=@max_limit%>;
 var min_limit = <%=@min_limit%>;
+
+var total_bytes = <%=@total_bytes%>;
+var max_bytes_limit = <%=@max_bytes_limit%>;
 </script>
 
 <%= render partial: "widgets" %>
 
+<div class="row">
+<div class="col-sm-8">
 <div class="card mb-3">
   <div class="card-header">
     <i class="fa fa-chart-area"></i>
-    Last 30 days Usage</div>
+    Current Month Usage</div>
   <div class="card-body">
     <canvas id="usageChart" width="100%" height="30"></canvas>
   </div>
   <div class="card-footer small text-muted">Updated at <%=Time.now.to_s%></div>
+</div>
+</div>
+
+<div class="col-sm-4">
+<div class="card mb-3">
+  <div class="card-header">
+    <i class="fa fa-chart-area"></i>
+    Current Month Usage</div>
+  <div class="card-body">
+    <canvas id="bandWidthChart" width="100%" height="65"></canvas>
+  </div>
+  <div class="card-footer small text-muted">Updated at <%=Time.now.to_s%></div>
+</div>
 </div>
 
 <p class="lead">

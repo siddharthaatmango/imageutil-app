@@ -5,9 +5,9 @@ $(document).on('turbolinks:load',
     Chart.defaults.global.defaultFontColor = '#292b2c';
 
     // Area Chart Example
-    var ctx = document.getElementById("usageChart");
-    if (ctx!=null){
-      var myLineChart = new Chart(ctx, {
+    var ctx1 = document.getElementById("usageChart");
+    if (ctx1!=null){
+      var myLineChart = new Chart(ctx1, {
         type: 'line',
         data: {
           labels: days_in_month,
@@ -67,6 +67,71 @@ $(document).on('turbolinks:load',
           legend: {
             display: true
           }
+        }
+      });
+    }
+
+    var ctx2 = document.getElementById('bandWidthChart').getContext("2d");
+    if (ctx2!=null){
+      myChart = new Chart(ctx2, {
+        type: 'pie',
+        data: {
+          labels: ['Total Bandwidth', 'Used Bandwith'],
+          datasets: [{
+            label: "Bandwidth",
+            pointRadius: 0,
+            pointHoverRadius: 0,
+            backgroundColor: [
+              '#4acccd',
+              '#fcc468'
+            ],
+            borderWidth: 0,
+            data: [max_bytes_limit, total_bytes]
+          }]
+        },
+
+        options: {
+
+          legend: {
+            display: true
+          },
+
+          pieceLabel: {
+            render: 'percentage',
+            fontColor: ['black'],
+            precision: 2
+          },
+
+          tooltips: {
+            enabled: false
+          },
+
+          scales: {
+            yAxes: [{
+
+              ticks: {
+                display: false
+              },
+              gridLines: {
+                drawBorder: false,
+                zeroLineColor: "transparent",
+                color: 'rgba(255,255,255,0.05)'
+              }
+
+            }],
+
+            xAxes: [{
+              barPercentage: 1.6,
+              gridLines: {
+                drawBorder: false,
+                color: 'rgba(255,255,255,0.1)',
+                zeroLineColor: "transparent"
+              },
+              ticks: {
+                display: false,
+              }
+            }]
+          },
         }
       });
     }
