@@ -18,11 +18,11 @@ class Folder < ApplicationRecord
     token
   end
   def upload_host
-    # Rails.env.production? ? 'https://imagetransform.io' : 'http://127.0.0.1:9090'
-    'https://imagetransform.io'
+    # Rails.env.production? ? 'https://transform.imageutil.io' : 'http://127.0.0.1:9090'
+    'https://transform.imageutil.io'
   end
   def preview(transform="s:320x240", is_smart=false)
-    url = "https://imagetransform.io/#{self.project.uuid}/media/#{transform}"
+    url = "https://transform.imageutil.io/#{self.project.uuid}/media/#{transform}"
     url = "#{url}/smart" if is_smart
     url = "#{url}/#{self.path.sub('storage/', '')}" 
     url

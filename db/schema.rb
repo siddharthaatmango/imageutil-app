@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 2019_05_13_003721) do
     t.integer "file_size", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "host_domain", default: "imagetransform.io"
+    t.string "host_domain", default: "transform.imageutil.io"
     t.index ["origin", "origin_path", "transformation", "is_smart"], name: "index_uniq_path", unique: true
     t.index ["project_id"], name: "index_images_on_project_id"
     t.index ["store_key"], name: "index_images_on_store_key", unique: true
@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(version: 2019_05_13_003721) do
     t.boolean "is_active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "default_host_domain", default: "imagetransform.io"
+    t.string "default_host_domain", default: "transform.imageutil.io"
     t.index ["fqdn"], name: "index_projects_on_fqdn", unique: true
     t.index ["user_id"], name: "index_projects_on_user_id"
     t.index ["uuid"], name: "index_projects_on_uuid", unique: true
